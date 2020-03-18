@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="内存处理">
+      <UniqueIdentifier>{2ba04714-fe61-49a0-9ec1-bfb721aa4ef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="摄像机">
+      <UniqueIdentifier>{412aff54-df5b-4279-93b0-1d30ad7e36ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="纹理">
+      <UniqueIdentifier>{5bda5a1c-1527-461f-9978-0ef1909dca45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="模型">
+      <UniqueIdentifier>{8befb706-7f8b-4758-8fd9-3f11923b0566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{0b2d326d-23fd-4a75-917f-25555f8758ff}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="base.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="buffer.cpp">
+      <Filter>内存处理</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>摄像机</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>纹理</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>模型</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="base.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="buffer.h">
+      <Filter>内存处理</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>摄像机</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>纹理</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>模型</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
