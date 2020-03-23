@@ -60,6 +60,11 @@ public:
         cleanup();
     }
 
+    vk::CommandPool commandPool;
+
+    vk::PhysicalDevice physicalDevice;
+    vk::Device device;
+    std::vector<vk::Image> swapChainImages;
 private:
     std::vector<Vertex> vertices =
     {
@@ -132,14 +137,12 @@ private:
     vk::Instance instance;
     VkSurfaceKHR surface;
 
-    vk::PhysicalDevice physicalDevice;
-    vk::Device device;
 
     vk::Queue graphicsQueue;
     vk::Queue presentQueue;
 
     vk::SwapchainKHR swapChain;
-    std::vector<vk::Image> swapChainImages;
+ 
     VkFormat swapChainImageFormat;
     VkExtent2D swapChainExtent;
     std::vector<vk::ImageView> swapChainImageViews;
@@ -150,7 +153,6 @@ private:
     vk::PipelineLayout pipelineLayout;
     vk::Pipeline graphicsPipeline;
 
-    vk::CommandPool commandPool;
     std::vector<vk::CommandBuffer> commandBuffers;
 
     std::vector<vk::Semaphore> imageAvailableSemaphores;
@@ -159,12 +161,12 @@ private:
     std::vector<vk::Fence> imagesInFlight;
     size_t currentFrame = 0;
 
-    vk::Buffer vertex_buffer;
-    vk::DeviceMemory vertex_memory;
-    vk::Buffer index_buffer;
-    vk::DeviceMemory index_memory;
-    std::vector<vk::Buffer> uniform_buffers;
-    std::vector<vk::DeviceMemory> uniform_memories;
+   // vk::Buffer vertex_buffer;
+   // vk::DeviceMemory vertex_memory;
+   // vk::Buffer index_buffer;
+    //vk::DeviceMemory index_memory;
+    //std::vector<vk::Buffer> uniform_buffers;
+   // std::vector<vk::DeviceMemory> uniform_memories;
     
     vk::Image texture_image;
     vk::DeviceMemory texture_memory;
@@ -175,8 +177,8 @@ private:
     vk::DeviceMemory depth_memory;
     vk::ImageView depth_image_view;
 	
-    vk::DescriptorPool descriptor_pool;
-    std::vector<vk::DescriptorSet> descriptor_sets;
+   // vk::DescriptorPool descriptor_pool;
+    //std::vector<vk::DescriptorSet> descriptor_sets;
     Mesh meshes;
     BufferProcess buffer_process;
     Texture texture;
@@ -194,15 +196,15 @@ private:
         createCommandPool();
         createDepthResources();
         createFramebuffers();
-        createTextureImgae();
-        createTextureImgaeView();
-        createTextureSampler();
-        load_my_model();
-        createVertexBuffer();
-        createIndexBuffer();
-        createUniformBuffers();
-        createDescriptorPool();
-        createDescriptorSets();
+       // createTextureImgae();
+       // createTextureImgaeView();
+       // createTextureSampler();
+       // load_my_model();
+       // createVertexBuffer();
+       // createIndexBuffer();
+       // createUniformBuffers();
+       // createDescriptorPool();
+        //createDescriptorSets();
         createCommandBuffers();
         createSyncObjects();
     }
@@ -217,16 +219,16 @@ private:
             std::cerr<<SDL_GetError();
     }
     void createDescriptorSetLayout();
-    void createUniformBuffers();
-    void updateUniformBuffer(uint32_t currentImage);
-    void createDescriptorPool();
-    void createDescriptorSets();
-    void createTextureImgae();
-    void createTextureImgaeView();
-    void createTextureSampler();
-    void createIndexBuffer();
+    //void createUniformBuffers();
+    //void updateUniformBuffer(uint32_t currentImage);
+    //void createDescriptorPool();
+   // void createDescriptorSets();
+   // void createTextureImgae();
+   // void createTextureImgaeView();
+    //void createTextureSampler();
+   // void createIndexBuffer();
     void createDepthResources();
-    void load_my_model();
+   // void load_my_model();
 	void mainLoop()
     {
         
@@ -272,16 +274,16 @@ private:
         device.destroyImage(depth_image);
         device.freeMemory(depth_memory);
 		
-        device.destroyDescriptorPool(descriptor_pool);
-        device.destroyBuffer(index_buffer);
-        device.free(index_memory);
-        device.destroyBuffer(vertex_buffer);
+       // device.destroyDescriptorPool(descriptor_pool);
+        //device.destroyBuffer(index_buffer);
+       // device.free(index_memory);
+        /*device.destroyBuffer(vertex_buffer);
         device.freeMemory(vertex_memory);
         for (size_t i = 0; i < swapChainImages.size(); i++) {
             device.destroyBuffer(uniform_buffers[i]);
             device.freeMemory(uniform_memories[i]);
         }
-		
+		*/
         for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
             vkDestroySemaphore(device, renderFinishedSemaphores[i], nullptr);
             vkDestroySemaphore(device, imageAvailableSemaphores[i], nullptr);
@@ -731,11 +733,7 @@ private:
             vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
             vk::DeviceSize offset[1] = { 0 };
         	
-            commandBuffers[i].bindVertexBuffers(0, 1, &vertex_buffer, offset);
-            commandBuffers[i].bindIndexBuffer(index_buffer, 0, vk::IndexType::eUint32);
-            uint32_t descriptor_offset = 0;
-            commandBuffers[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics, pipelineLayout, 0, descriptor_sets[i],nullptr);
-            commandBuffers[i].drawIndexed(static_cast<uint32_t>(meshes.indices.size()), 1, 0, 0, 0);
+         
             vkCmdEndRenderPass(commandBuffers[i]);
 
             if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS) {
@@ -775,7 +773,7 @@ private:
         }
         imagesInFlight[imageIndex] = inFlightFences[currentFrame];
 
-        updateUniformBuffer(imageIndex);
+        //updateUniformBuffer(imageIndex);
         vk::SubmitInfo submitInfo = {};
 
         vk::Semaphore waitSemaphores[] = { imageAvailableSemaphores[currentFrame] };

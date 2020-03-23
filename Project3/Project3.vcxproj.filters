@@ -48,6 +48,9 @@
     <ClCompile Include="model.cpp">
       <Filter>模型</Filter>
     </ClCompile>
+    <ClCompile Include="engine.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base.h">

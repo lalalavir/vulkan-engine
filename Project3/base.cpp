@@ -19,7 +19,7 @@ void HelloTriangleApplication::createDescriptorSetLayout()
 
 	descriptor_set_layout = device.createDescriptorSetLayout(create_info);
 }
-
+/*
 void HelloTriangleApplication::createUniformBuffers()
 {
 	vk::DeviceSize buffer_size = sizeof(UBO);
@@ -180,17 +180,18 @@ void HelloTriangleApplication::createIndexBuffer()
 	device.freeMemory(stagingBufferMemory);
 }
 
+
+void HelloTriangleApplication::load_my_model()
+{
+	Model model;
+    meshes= model.loadModel("D:/vulkan/model/chalet.obj");
+}
+*/
 void HelloTriangleApplication::createDepthResources()
 {
 	auto format = texture.find_supported_format(physicalDevice, { vk::Format::eD32Sfloat, vk::Format::eD32SfloatS8Uint, vk::Format::eD24UnormS8Uint },
 		vk::ImageTiling::eOptimal, vk::FormatFeatureFlagBits::eDepthStencilAttachment);
 	texture.createImage(device, physicalDevice, swapChainExtent.width, swapChainExtent.height, format, vk::ImageTiling::eOptimal,
 		vk::ImageUsageFlagBits::eDepthStencilAttachment, vk::MemoryPropertyFlagBits::eDeviceLocal, depth_image, depth_memory);
-	depth_image_view = texture.createImageView(device, depth_image, format, vk::ImageAspectFlagBits::eDepth);	
-}
-
-void HelloTriangleApplication::load_my_model()
-{
-	Model model;
-    meshes= model.loadModel("D:/vulkan/model/chalet.obj");
+	depth_image_view = texture.createImageView(device, depth_image, format, vk::ImageAspectFlagBits::eDepth);
 }
