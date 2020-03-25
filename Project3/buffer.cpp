@@ -34,6 +34,40 @@ void BufferProcess::copyBuffer(const vk::Device& device, const vk::CommandPool& 
     endSingleTimeCommands(command_buffer, device, commandPool, transfer_queue);
 }
 
+void BufferProcess::createBuffer(const vk::Device& device, const vk::PhysicalDevice& physical_device,
+	vk::UniqueBuffer& buffer, vk::UniqueDeviceMemory& bufferMemory, vk::DeviceSize size, vk::BufferUsageFlags usage,
+	vk::MemoryPropertyFlags property_flags)
+{
+    vk::BufferCreateInfo buffer_create_info =
+    {
+        {},size,usage,vk::SharingMode::eExclusive
+    };
+    buffer = device.createBufferUnique(buffer_create_info);
+
+    auto memRequirements = device.getBufferMemoryRequirements(*buffer);
+    vk::MemoryAllocateInfo allocate_info =
+    {
+         memRequirements.size,findMemoryType(physical_device,memRequirements.memoryTypeBits,property_flags)
+    };
+
+    bufferMemory = device.allocateMemoryUnique(allocate_info);
+    device.bindBufferMemory(*buffer, *bufferMemory, 0);
+}
+
+void BufferProcess::copyBuffer(const vk::Device& device, const vk::CommandPool& commandPool,
+	const vk::Queue& transfer_queue, vk::UniqueBuffer srcBuffer, vk::UniqueBuffer dstBuffer, vk::DeviceSize size)
+{
+    vk::CommandBuffer command_buffer = beginCommandBuffer(device, commandPool);
+
+    vk::BufferCopy buffer_copy =
+    {
+        0,0,size
+    };
+    command_buffer.copyBuffer(*srcBuffer, *dstBuffer, buffer_copy);
+
+    endSingleTimeCommands(command_buffer, device, commandPool, transfer_queue);
+}
+
 vk::CommandBuffer BufferProcess::beginCommandBuffer(const vk::Device& device, const vk::CommandPool& command_pool)
 {
     vk::CommandBufferAllocateInfo allocate_info =
