@@ -1,20 +1,6 @@
 #include  "model.h"
-std::array<VkVertexInputAttributeDescription, 4> Vertex::get_attribute_description()
-{
-	std::array<vk::VertexInputAttributeDescription, 4> attribute;
-	attribute[0].setFormat(vk::Format::eR32G32B32Sfloat).setBinding(0).setLocation(0).setOffset(offsetof(Vertex, pos));
-	attribute[1].setFormat(vk::Format::eR32G32B32Sfloat).setBinding(0).setLocation(1).setOffset(offsetof(Vertex, color));
-	attribute[2].setFormat(vk::Format::eR32G32B32Sfloat).setBinding(0).setLocation(2).setOffset(offsetof(Vertex, normal));
-	attribute[3].setFormat(vk::Format::eR32G32Sfloat).setBinding(0).setLocation(3).setOffset(offsetof(Vertex, texCoord));
-	return { attribute[0],attribute[1],attribute[2],attribute[3] };
-}
+/*
 
-std::array<VkVertexInputBindingDescription, 1> Vertex::get_binding_descriptions()
-{
-	std::array<vk::VertexInputBindingDescription, 1> binding;
-	binding[0].setBinding(0).setInputRate(vk::VertexInputRate::eVertex).setStride(sizeof(Vertex));
-	return { binding[0] };
-}
 
 Mesh Model::loadModel(std::string path)
 {
@@ -136,4 +122,22 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
     // return a mesh object created from the extracted mesh data
     return Mesh(vertices, indices, textures);
+}
+*/
+
+std::array<VkVertexInputAttributeDescription, 4> Vertex::get_attribute_description()
+{
+    std::array<vk::VertexInputAttributeDescription, 4> attribute;
+    attribute[0].setFormat(vk::Format::eR32G32B32Sfloat).setBinding(0).setLocation(0).setOffset(offsetof(Vertex, pos));
+    attribute[1].setFormat(vk::Format::eR32G32B32Sfloat).setBinding(0).setLocation(1).setOffset(offsetof(Vertex, color));
+    attribute[2].setFormat(vk::Format::eR32G32B32Sfloat).setBinding(0).setLocation(2).setOffset(offsetof(Vertex, normal));
+    attribute[3].setFormat(vk::Format::eR32G32Sfloat).setBinding(0).setLocation(3).setOffset(offsetof(Vertex, texCoord));
+    return { attribute[0],attribute[1],attribute[2],attribute[3] };
+}
+
+std::array<VkVertexInputBindingDescription, 1> Vertex::get_binding_descriptions()
+{
+    std::array<vk::VertexInputBindingDescription, 1> binding;
+    binding[0].setBinding(0).setInputRate(vk::VertexInputRate::eVertex).setStride(sizeof(Vertex));
+    return { binding[0] };
 }

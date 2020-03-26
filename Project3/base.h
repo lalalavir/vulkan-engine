@@ -17,7 +17,7 @@
 #include <SDL.h>
 #include <SDL_vulkan.h>
 #include <chrono>
-
+#include "engine.h"
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
@@ -59,7 +59,7 @@ public:
         mainLoop();
         cleanup();
     }
-
+    HelloTriangleApplication(){}
     vk::CommandPool commandPool;
 
     vk::PhysicalDevice physicalDevice;
@@ -176,10 +176,10 @@ private:
     vk::Image depth_image;
     vk::DeviceMemory depth_memory;
     vk::ImageView depth_image_view;
-	
+    Engine engine;
    // vk::DescriptorPool descriptor_pool;
     //std::vector<vk::DescriptorSet> descriptor_sets;
-    Mesh meshes;
+   // Mesh meshes;
     BufferProcess buffer_process;
     Texture texture;
     Camera camera = Camera(glm::vec3(0.0f, -2.0f, 2.0f), glm::radians(45.0f), glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -705,7 +705,13 @@ private:
         allocInfo.commandBufferCount = (uint32_t)commandBuffers.size();
 
         commandBuffers = device.allocateCommandBuffers(allocInfo);
-
+        Engine_value engine_value;
+        engine_value.command_pool = commandPool;
+        engine_value.physical_device = physicalDevice;
+        engine_value.swapChain_image_size = swapChainImages.size();
+        engine_value.device = device;
+        engine = engine_value;
+        auto triangle = engine.createObject(Engine::ObjectType::triangle, glm::vec3(0, 0, 0));
         for (size_t i = 0; i < commandBuffers.size(); i++) {
             VkCommandBufferBeginInfo beginInfo = {};
             beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -732,7 +738,7 @@ private:
 
             vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
             vk::DeviceSize offset[1] = { 0 };
-        	
+            engine.draw(commandBuffers[i], triangle, i);
          
             vkCmdEndRenderPass(commandBuffers[i]);
 
